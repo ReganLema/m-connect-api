@@ -57,7 +57,20 @@ Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+    Route::post('/verify-otp', [AuthController::class, 'verifyOtp']);
+    Route::post('/resend-otp', [AuthController::class, 'resendOtp']);  
     
+    
+      // Password reset routes
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('/verify-reset-otp', [AuthController::class, 'verifyResetOtp']);
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
+    
+
+
+
+
+
     // Protected routes
     Route::middleware('auth:api')->group(function () {
         Route::get('/me', [AuthController::class, 'me']);
@@ -110,6 +123,7 @@ Route::middleware('auth:api')->group(function () {
     
     // User profile routes
     Route::prefix('users')->group(function () {
+         Route::get('/{id}', [UserController::class, 'show']); 
         Route::put('/{id}', [UserController::class, 'update']);
         Route::post('/{id}/avatar', [UserController::class, 'uploadAvatar']);
     });
@@ -272,3 +286,4 @@ Route::get('/health', function () {
         'status' => 'ok'
     ]);
 });
+
